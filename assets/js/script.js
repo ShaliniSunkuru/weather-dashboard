@@ -5,36 +5,46 @@ fetchWeatherData(city);
 
 function fetchWeatherData(city){
     // query url for open weather geocoding api
-    var queryUrlGeo = "http://api.openweathermap.org/geo/1.0/direct?q=London&appid=12cf5cf50a250d57c0c862681cdce34e";
+    var apiKey = "12cf5cf50a250d57c0c862681cdce34e"
+    var queryUrlGeo = "http://api.openweathermap.org/geo/1.0/direct?q=London&appid=" + apiKey;
 
     fetch(queryUrlGeo)
     .then(response => response.json())
     .then(data => {
         var lattitude = data[0].lat;
         var longitude = data[0].lon;
+        
+        //query url for current weather
+        var queryUrlToday = "https://api.openweathermap.org/data/2.5/weather?lat=" +lattitude + "&lon=" + longitude + "&appid=" + apiKey;
+        fetch(queryUrlToday)
+        .then(response => response.json())
+        .then(data => {
+            displayCurrentData(data);
+        })
+        .catch(error =>{
+            console.log("Error: " +error);
+        })
+
         //query url for 5 day forecast
         var queryUrl5Day = "http://api.openweathermap.org/data/2.5/forecast?lat=" + lattitude + "&lon=" + longitude + "&appid=12cf5cf50a250d57c0c862681cdce34e";
-        return fetch(queryUrl5Day);
+        fetch(queryUrl5Day)
+        .then(response => response.json())
+        .then(data => {
+            displayForecast(data.list);
+        })
+        .catch(error =>{
+            console.log("Error: " +error);
+        })
     })
     .catch(error =>{
         console.log("Error: " +error);
-    })
-    .then( response => response.json())
-    .then(data => {
-        console.log(data);
-        displayCurrentData(data.list[0]);
-        displayForecast(data.list);
-    })
-    .catch(error =>{
-        console.log("Error: " +error);
-    })
+    })    
 
 }
 
 function displayCurrentData(currentWeatherData){
     //city and today's date
-    var date = currentWeatherData.dt_txt;
-    var today = dayjs(date).format("DD/MM/YYYY");
+    var today = dayjs().format("DD/MM/YYYY");
     var todayH2 = $('<h2>');
     todayH2.text(city + " ( " + today + " )");
     todaySection.append(todayH2);
@@ -66,6 +76,15 @@ function displayCurrentData(currentWeatherData){
 
 }
 
-function displayForecast(forecastArray){
-    console.log(forecastArray);
-}
+// function displayForecast(forecastArray){
+//     console.log(forecastArray);
+//     var forecastWeather = [];
+//     for(var i = 0; i < forecastArray.length; i++){
+//         var thisDate = dayjs(forecastArray[i].dt_txt).get('date');
+//         if(thisDate !== dayjs().get('date')){
+//             console.log("Not-Today" + thisDate )
+//         }else{
+//             console.log("Today");
+//         }
+//     }
+// }
