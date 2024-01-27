@@ -1,5 +1,6 @@
 var city = "London";
 var todaySection = $("#today");
+var forecastSection = $("#forecast");
 
 fetchWeatherData(city);
 
@@ -89,31 +90,28 @@ function displayCurrentData(currentWeatherData){
 //     }
 // }
 function displayForecast(forecastArray){
-    console.log(forecastArray);
+    // console.log(forecastArray);
     var forecastWeather = [];
-    // var tempArr = [];
-    // var windArr = [];
-    // var humidityArr = [];
-    
+
     for(j = 0; j < 6; j++){
         tempArr =[];
         windArr =[];
         humidityArr = []; 
         for(var i = 0; i < forecastArray.length; i++){
             var thisDate = dayjs(forecastArray[i].dt_txt).format('DD/MM/YYYY');
-            // debugger;      
-            if(thisDate === dayjs().add(j,'day').format('DD/MM/YYYY')){
-                console.log(thisDate); 
-                // debugger;
+      
+            if(thisDate === dayjs().add(j,'day').format('DD/MM/YYYY')){ 
+
                 var dailyWeather ={};
                 dailyWeather.date = thisDate;
-                tempArr.push(forecastArray[i].main.temp);
-                windArr.push(forecastArray[i].wind.speed);
-                humidityArr.push(forecastArray[i].main.humidity);    
                 dailyWeather.Temp = tempArr;
                 dailyWeather.Wind = windArr;
                 dailyWeather.Humidity = humidityArr;
+                tempArr.push(forecastArray[i].main.temp);
+                windArr.push(forecastArray[i].wind.speed);
+                humidityArr.push(forecastArray[i].main.humidity);                
             }
+            
         }
         forecastWeather.push(dailyWeather);
            
@@ -121,6 +119,34 @@ function displayForecast(forecastArray){
 
     
     console.log(forecastWeather);
+
+    for(var i = 1; i < forecastWeather.length; i++){
+        var average = arr => arr.reduce((prev, curr)=> prev + curr)/arr.length;
+        var newCardEl = $('<div>');
+        newCardEl.addClass('card col-2 mx-3');
+        var dateDiv = $('<div>');
+        dateDiv.addClass('card-header');
+        dateDiv.text(forecastWeather[i].date);
+        var tempP = $('<p>');   
+        tempP.text("Temp: " + average(forecastWeather[i].Temp).toFixed(2) + " °C");
+        console.log("Temp: " + average(forecastWeather[i].Temp).toFixed(2) + " °C");
+        var windP = $('<p>');   
+        windP.text("Wind: " + average(forecastWeather[i].Wind).toFixed(2) + " KPH");
+        console.log("Wind: " + average(forecastWeather[i].Wind).toFixed(2) + " KPH");
+        var humidityP = $('<p>');   
+        humidityP.text("Humidity: " + average(forecastWeather[i].Humidity).toFixed(2) + " °C");
+        console.log("Humidity: " + average(forecastWeather[i].Humidity).toFixed(2) + " °C");
+        newCardEl.append(dateDiv, tempP, windP, humidityP);
+        forecastSection.append(newCardEl);
+        
+    }
+
+    // var arr = [1,4,4,3,2]
+    
+    // console.log(average(arr));
+    // var max = Math.max(...arr);
+    // var min = Math.min(...arr);
+    // console.log(max, min);
 
 }
 
