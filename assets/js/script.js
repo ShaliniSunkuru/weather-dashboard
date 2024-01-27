@@ -88,3 +88,39 @@ function displayCurrentData(currentWeatherData){
 //         }
 //     }
 // }
+function displayForecast(forecastArray){
+    console.log(forecastArray);
+    var forecastWeather = [];
+    // var tempArr = [];
+    // var windArr = [];
+    // var humidityArr = [];
+    
+    for(j = 0; j < 6; j++){
+        tempArr =[];
+        windArr =[];
+        humidityArr = []; 
+        for(var i = 0; i < forecastArray.length; i++){
+            var thisDate = dayjs(forecastArray[i].dt_txt).format('DD/MM/YYYY');
+            // debugger;      
+            if(thisDate === dayjs().add(j,'day').format('DD/MM/YYYY')){
+                console.log(thisDate); 
+                // debugger;
+                var dailyWeather ={};
+                dailyWeather.date = thisDate;
+                tempArr.push(forecastArray[i].main.temp);
+                windArr.push(forecastArray[i].wind.speed);
+                humidityArr.push(forecastArray[i].main.humidity);    
+                dailyWeather.Temp = tempArr;
+                dailyWeather.Wind = windArr;
+                dailyWeather.Humidity = humidityArr;
+            }
+        }
+        forecastWeather.push(dailyWeather);
+           
+    }
+
+    
+    console.log(forecastWeather);
+
+}
+
