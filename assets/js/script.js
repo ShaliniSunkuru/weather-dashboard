@@ -169,10 +169,12 @@ inputGroupDiv.on("click", ".search-btn", function(event){
     forecastSection.empty();
 
     //user input
-    city = $('#search-input').val().trim();
+    var searchInput = $('#search-input');
+    if(searchInput.val()){
+        city = searchInput.val().trim();
     
     fetchWeatherData(city);
-    
+     searchInput.val('');
     //add city to local storage
     if(!cityArray.includes(city)){ 
         cityArray.push(city);
@@ -184,6 +186,9 @@ inputGroupDiv.on("click", ".search-btn", function(event){
     }
     localStorage.setItem("cities", JSON.stringify(cityArray));
 
+
+    }
+    
 })
 
 function updateSearchGrid(){
