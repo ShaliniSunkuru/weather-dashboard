@@ -1,3 +1,20 @@
 .forecast-header{
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
+    border: 1px solid black;
+    padding: 0;
+}
+
+#forecast{
+    border: 1px solid black;
+    height: 40vh;
+}
+#today{
+    height: 30vh;
+}
+.forecast-card{
+    background-color: darkcyan !important;
+}
+
+.min-temp{
+    font-size:small;
 }
