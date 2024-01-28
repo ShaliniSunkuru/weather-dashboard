@@ -67,6 +67,13 @@ function displayCurrentData(currentWeatherData){
     var todayH2 = $('<h2>');
     todayH2.text(city + " ( " + today + " )");
     todaySection.append(todayH2);
+
+    // weather icon
+    var icon = currentWeatherData.weather[0].icon;
+    var iconUrl = "https://openweathermap.org/img/wn/"+ icon +".png";
+    var newImg = $('<img>');
+    newImg.attr('src', iconUrl);
+    todayH2.append(newImg);
     
     //Temperature, Wind speed, humidity
     var currentWeather = [
@@ -94,10 +101,10 @@ function displayCurrentData(currentWeatherData){
         todaySection.append(newP);
     })
 
+
 }
 
 function displayForecast(forecastArray){
-    // console.log(forecastArray);
     var forecastWeather = [];
 
     for(j = 1; j < 6; j++){
@@ -106,11 +113,13 @@ function displayForecast(forecastArray){
         var humidityArr = []; 
         for(var i = 0; i < forecastArray.length; i++){
             var thisDate = dayjs(forecastArray[i].dt_txt).format('DD/MM/YYYY');
+            var thisIcon = forecastArray[j].weather[0].icon;
       
             if(thisDate === dayjs().add(j,'day').format('DD/MM/YYYY')){ 
 
                 var dailyWeather ={};
                 dailyWeather.date = thisDate;
+                dailyWeather.icon = thisIcon;
                 dailyWeather.Temp = tempArr;
                 dailyWeather.Wind = windArr;
                 dailyWeather.Humidity = humidityArr;
@@ -133,6 +142,10 @@ function displayForecast(forecastArray){
         var dateDiv = $('<div>');
         dateDiv.addClass('card-header');
         dateDiv.text(forecastWeather[i].date);
+        var iconImg = $('<img>');
+        var iconUrl = "https://openweathermap.org/img/wn/"+ forecastWeather[i].icon +".png";
+        iconImg.attr('src', iconUrl);
+        dateDiv.append(iconImg);
         var tempP = $('<p>');   
         tempP.text("Temp: " + Math.round(Math.max(...forecastWeather[i].Temp)) + "°C ");
         var tempSpan = $('<span>')

@@ -10,12 +10,12 @@ body{
 }
 .forecast-header{
     /* margin-bottom: 5px; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding: 0;
 }
 
 #forecast{
-    border: 1px solid black;
+    /* border: 1px solid black; */
     height: 40vh;
 }
 #today{
@@ -23,10 +23,14 @@ body{
 }
 .forecast-card{
     background-color: darkcyan !important;
+    height: fit-content !important;
 }
 
 .min-temp{
     font-size:small;
+}
+.card-header{
+    font-weight: bold;
 }
 .city-button{
     width: 100%;
