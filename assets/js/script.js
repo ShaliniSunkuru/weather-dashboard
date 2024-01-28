@@ -3,11 +3,14 @@ var todaySection = $("#today");
 var forecastSection = $("#forecast");
 var inputGroupDiv = $('.input-group')
 var searchHistoryGrid = $("#search-history");
+var weatherDetailDiv = $('#weather-detail');
 var cityArray = []
 
 pageLoad();
 
 function pageLoad(){
+    weatherDetailDiv.removeClass('visible');
+    weatherDetailDiv.addClass('invisible');
     if(localStorage.getItem("cities")!== null){
         cityArray = JSON.parse(localStorage.getItem("cities"));
         for(var i = 0; i<cityArray.length; i++){
@@ -18,6 +21,8 @@ function pageLoad(){
 
 function fetchWeatherData(city){
     // query url for open weather geocoding api
+    weatherDetailDiv.removeClass('invisible');
+    weatherDetailDiv.addClass('visible');
     var apiKey = "12cf5cf50a250d57c0c862681cdce34e"
     var queryUrlGeo = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
     
