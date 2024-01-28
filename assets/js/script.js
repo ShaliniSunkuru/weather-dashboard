@@ -1,19 +1,19 @@
-var city = "London";
+var city = "";
 var todaySection = $("#today");
 var forecastSection = $("#forecast");
-
-fetchWeatherData(city);
+var inputGroupDiv = $('.input-group')
 
 function fetchWeatherData(city){
     // query url for open weather geocoding api
     var apiKey = "12cf5cf50a250d57c0c862681cdce34e"
-    var queryUrlGeo = "http://api.openweathermap.org/geo/1.0/direct?q=London&appid=" + apiKey;
+    var queryUrlGeo = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 
     fetch(queryUrlGeo)
     .then(response => response.json())
     .then(data => {
         var lattitude = data[0].lat;
         var longitude = data[0].lon;
+        console.log(lattitude, longitude);
         
         //query url for current weather
         var queryUrlToday = "https://api.openweathermap.org/data/2.5/weather?lat=" +lattitude + "&lon=" + longitude + "&units=metric&appid=" + apiKey;
@@ -130,12 +130,13 @@ function displayForecast(forecastArray){
         
     }
 
-    // var arr = [1,4,4,3,2]
-    
-    // console.log(average(arr));
-    // var max = Math.max(...arr);
-    // var min = Math.min(...arr);
-    // console.log(max, min);
-
 }
+
+inputGroupDiv.on("click", ".search-btn", function(event){
+    event.preventDefault();
+    todaySection.empty();
+    forecastSection.empty();
+    city = $('#search-input').val().trim();
+    fetchWeatherData(city);
+})
 
