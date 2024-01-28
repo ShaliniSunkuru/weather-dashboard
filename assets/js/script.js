@@ -13,8 +13,6 @@ function pageLoad(){
         for(var i = 0; i<cityArray.length; i++){
             createCityButton(cityArray[i]);
     }
-
-
     }
 }
 
@@ -22,7 +20,7 @@ function fetchWeatherData(city){
     // query url for open weather geocoding api
     var apiKey = "12cf5cf50a250d57c0c862681cdce34e"
     var queryUrlGeo = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
-
+    
     fetch(queryUrlGeo)
     .then(response => response.json())
     .then(data => {
@@ -141,10 +139,8 @@ function displayForecast(forecastArray){
         var humidityP = $('<p>');   
         humidityP.text("Humidity: " + Math.round(average(forecastWeather[i].Humidity)) + "%");
         newCardEl.append(dateDiv, tempP, windP, humidityP);
-        forecastSection.append(newCardEl);
-        
+        forecastSection.append(newCardEl);        
     }
-
 }
 
 inputGroupDiv.on("click", ".search-btn", function(event){
@@ -160,7 +156,7 @@ inputGroupDiv.on("click", ".search-btn", function(event){
     fetchWeatherData(city);
     createCityButton(city);
     //add city to local storage
-    cityArray.push(city);
+    cityArray.unshift(city);
     localStorage.setItem("cities", JSON.stringify(cityArray));
 
 })
