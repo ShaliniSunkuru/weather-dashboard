@@ -154,12 +154,26 @@ inputGroupDiv.on("click", ".search-btn", function(event){
     city = $('#search-input').val().trim();
     
     fetchWeatherData(city);
-    createCityButton(city);
+    
     //add city to local storage
-    cityArray.unshift(city);
+    if(!cityArray.includes(city)){ 
+        cityArray.push(city);
+        createCityButton(city);
+    }else{
+        cityArray = cityArray.filter(item => item != city)
+        cityArray.push(city);
+        updateSearchGrid();
+    }
     localStorage.setItem("cities", JSON.stringify(cityArray));
 
 })
+
+function updateSearchGrid(){
+    searchHistoryGrid.empty();
+    for(var i = 0; i < cityArray.length; i++){
+        createCityButton(cityArray[i]);
+    }
+}
 
 function createCityButton(city){
     //add buttons for city 
@@ -167,5 +181,26 @@ function createCityButton(city){
     cityButton.addClass('btn btn-primary');
     cityButton.attr('type', 'button');
     cityButton.text(city);
-    searchHistoryGrid.append(cityButton);
+    searchHistoryGrid.prepend(cityButton);
 }
+
+$('#buttons').on("click", function(event){
+    var btnText = $(event.target).text();
+    if(btnText === "Clear History"){
+        localStorage.removeItem("cities");
+        cityArray = [];
+        searchHistoryGrid.empty();
+    } else{
+        //clear weather data from main page
+        todaySection.empty();
+        forecastSection.empty();
+        //Display weather data of city clicked
+        city = btnText;
+        fetchWeatherData(city);
+        //update search grid to show clicked city on top
+        cityArray = cityArray.filter(item => item != city)
+        cityArray.push(city);
+        updateSearchGrid();
+    }
+    
+})
