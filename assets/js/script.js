@@ -2,6 +2,21 @@ var city = "";
 var todaySection = $("#today");
 var forecastSection = $("#forecast");
 var inputGroupDiv = $('.input-group')
+var searchHistoryGrid = $("#search-history");
+var cityArray = []
+
+pageLoad();
+
+function pageLoad(){
+    if(localStorage.getItem("cities")!== null){
+        cityArray = JSON.parse(localStorage.getItem("cities"));
+        for(var i = 0; i<cityArray.length; i++){
+            createCityButton(cityArray[i]);
+    }
+
+
+    }
+}
 
 function fetchWeatherData(city){
     // query url for open weather geocoding api
@@ -134,9 +149,27 @@ function displayForecast(forecastArray){
 
 inputGroupDiv.on("click", ".search-btn", function(event){
     event.preventDefault();
+
+    //clear weather data from main page
     todaySection.empty();
     forecastSection.empty();
+
+    //user input
     city = $('#search-input').val().trim();
+    
     fetchWeatherData(city);
+    createCityButton(city);
+    //add city to local storage
+    cityArray.push(city);
+    localStorage.setItem("cities", JSON.stringify(cityArray));
+
 })
 
+function createCityButton(city){
+    //add buttons for city 
+    var cityButton = $('<button>');
+    cityButton.addClass('btn btn-primary');
+    cityButton.attr('type', 'button');
+    cityButton.text(city);
+    searchHistoryGrid.append(cityButton);
+}
