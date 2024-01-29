@@ -1,4 +1,4 @@
-var city = "";
+var currentCity = "";
 var todaySection = $("#today");
 var forecastSection = $("#forecast");
 var inputGroupDiv = $('.input-group')
@@ -9,17 +9,21 @@ var cityArray = []
 pageLoad();
 
 function pageLoad(){
-    weatherDetailDiv.removeClass('visible');
-    weatherDetailDiv.addClass('invisible');
     if(localStorage.getItem("cities")!== null){
         cityArray = JSON.parse(localStorage.getItem("cities"));
-        for(var i = 0; i<cityArray.length; i++){
-            createCityButton(cityArray[i]);
-    }
+        updateSearchGrid();
+        currentCity = cityArray[(cityArray.length)-1];
+        fetchWeatherData(currentCity);
+    } else{
+        weatherDetailDiv.removeClass('visible');
+        weatherDetailDiv.addClass('invisible');
     }
 }
 
 function fetchWeatherData(city){
+
+    //set city 
+    currentCity = city;
     // query url for open weather geocoding api
     weatherDetailDiv.removeClass('invisible');
     weatherDetailDiv.addClass('visible');
@@ -65,7 +69,7 @@ function displayCurrentData(currentWeatherData){
     //city and today's date
     var today = dayjs().format("DD/MM/YYYY");
     var todayH2 = $('<h2>');
-    todayH2.text(city + " ( " + today + " )");
+    todayH2.text(currentCity + " ( " + today + " )");
     todaySection.append(todayH2);
 
     // weather icon
@@ -171,22 +175,22 @@ inputGroupDiv.on("click", ".search-btn", function(event){
     //user input
     var searchInput = $('#search-input');
     if(searchInput.val()){
-        city = searchInput.val().trim();
+        currentCity = searchInput.val().trim();
     
-    fetchWeatherData(city);
+    fetchWeatherData(currentCity);
      searchInput.val('');
     //add city to local storage
-    if(!cityArray.includes(city)){ 
-        cityArray.push(city);
-        createCityButton(city);
+    if(!cityArray.includes(currentCity)){ 
+        cityArray.push(currentCity);
+        createCityButton(currentCity);
+        localStorage.setItem("cities", JSON.stringify(cityArray));
     }else{
-        cityArray = cityArray.filter(item => item != city)
-        cityArray.push(city);
+        cityArray = cityArray.filter(item => item != currentCity)
+        cityArray.push(currentCity);
+        updateLocalStorage();
         updateSearchGrid();
-    }
-    localStorage.setItem("cities", JSON.stringify(cityArray));
 
-
+    }    
     }
     
 })
@@ -196,6 +200,10 @@ function updateSearchGrid(){
     for(var i = 0; i < cityArray.length; i++){
         createCityButton(cityArray[i]);
     }
+}
+function updateLocalStorage(){
+    localStorage.removeItem("cities");
+    localStorage.setItem("cities", JSON.stringify(cityArray));
 }
 
 function createCityButton(city){
@@ -218,11 +226,12 @@ $('#buttons').on("click", function(event){
         todaySection.empty();
         forecastSection.empty();
         //Display weather data of city clicked
-        city = btnText;
-        fetchWeatherData(city);
+        currentCity = btnText;
+        fetchWeatherData(currentCity);
         //update search grid to show clicked city on top
-        cityArray = cityArray.filter(item => item != city)
-        cityArray.push(city);
+        cityArray = cityArray.filter(item => item != currentCity)
+        cityArray.push(currentCity);
+        updateLocalStorage();
         updateSearchGrid();
     }
     
