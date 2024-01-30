@@ -3,11 +3,14 @@
     padding: 0;
 }
 body{
-    background-image: url("../../images/weather2.jpg");
+    background-image: url("../../images/weather1.jpg");
     background-repeat: repeat-y;
     background-size: cover;
     max-width: 1500px;
     
+}
+.weather-header{
+    background: linear-gradient(65deg,darkcyan,  rgb(1, 65, 65))
 }
 .input-group{
     max-width: 320px;
@@ -28,6 +31,8 @@ body{
 }
 #today{
     height: 30vh;
+    /* background-image: url("../../images/weather2.jpg"); */
+    background-color: lightsteelblue;
 }
 .forecast-card{
     background-color: darkcyan !important;
