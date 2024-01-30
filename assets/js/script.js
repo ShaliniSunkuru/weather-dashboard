@@ -179,18 +179,14 @@ inputGroupDiv.on("click", ".search-btn", function(event){
     
     fetchWeatherData(currentCity);
      searchInput.val('');
-    //add city to local storage
-    if(!cityArray.includes(currentCity)){ 
-        cityArray.push(currentCity);
-        createCityButton(currentCity);
-        localStorage.setItem("cities", JSON.stringify(cityArray));
-    }else{
-        cityArray = cityArray.filter(item => item != currentCity)
-        cityArray.push(currentCity);
-        updateLocalStorage();
+    
+     //add input city to the top of search grid and local storage
+    if(cityArray.includes(currentCity)){ 
+        cityArray = cityArray.filter(item => item != currentCity)       
+    }
+    cityArray.push(currentCity);
         updateSearchGrid();
-
-    }    
+        updateLocalStorage();   
     }
     
 })
