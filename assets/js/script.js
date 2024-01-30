@@ -29,13 +29,16 @@ function fetchWeatherData(city){
     weatherDetailDiv.addClass('visible');
     var apiKey = "12cf5cf50a250d57c0c862681cdce34e"
     var queryUrlGeo = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
-    
     fetch(queryUrlGeo)
     .then(response => response.json())
     .then(data => {
+        if(data.length === 0){
+            pageLoad();
+            throw new Error('Location not found!')
+            
+        }else{
         var lattitude = data[0].lat;
         var longitude = data[0].lon;
-        console.log(lattitude, longitude);
         
         //query url for current weather
         var queryUrlToday = "https://api.openweathermap.org/data/2.5/weather?lat=" +lattitude + "&lon=" + longitude + "&units=metric&appid=" + apiKey;
@@ -58,9 +61,19 @@ function fetchWeatherData(city){
         .catch(error =>{
             console.log("Error: " +error);
         })
+        
+        //add input city to the top of search grid and local storage
+        if(cityArray.includes(currentCity)){ 
+            cityArray = cityArray.filter(item => item != currentCity)       
+        }
+        cityArray.push(currentCity);
+            updateSearchGrid();
+            updateLocalStorage(); 
+    }
     })
     .catch(error =>{
-        console.log("Error: " +error);
+        // console.log("Error: " +error);
+        alert("Location not found!");
     })    
 
 }
@@ -137,8 +150,6 @@ function displayForecast(forecastArray){
            
     }
 
-    console.log(forecastWeather);
-
     for(var i = 0; i < forecastWeather.length; i++){
         var average = arr => arr.reduce((prev, curr)=> prev + curr)/arr.length;
         var newCardEl = $('<div>');
@@ -179,14 +190,7 @@ inputGroupDiv.on("click", ".search-btn", function(event){
     
     fetchWeatherData(currentCity);
      searchInput.val('');
-    
-     //add input city to the top of search grid and local storage
-    if(cityArray.includes(currentCity)){ 
-        cityArray = cityArray.filter(item => item != currentCity)       
-    }
-    cityArray.push(currentCity);
-        updateSearchGrid();
-        updateLocalStorage();   
+      
     }
     
 })
