@@ -34,17 +34,17 @@ WHEN I open the application in the browser\
 I see a form input to search city\
 WHEN I type in the name of a city and click on search button\
 I see the day's weather information including:\
-    - The city name
-    - The date
-    - An icon representation of weather conditions
-    - The temperature
-    - The humidity
+    - The city name\
+    - The date\
+    - An icon representation of weather conditions\
+    - The temperature\
+    - The humidity\
     - The wind speed\
 I also see the 5-day weather forecast of the city displaying:\
-    - The date
-    - An icon representation of weather conditions
-    - The temperature (maximum and minumum for the day)
-    - The wind speed (average)
+    - The date\
+    - An icon representation of weather conditions\
+    - The temperature (maximum and minumum for the day)\
+    - The wind speed (average)\
     - The humidity (average)\
 WHEN I search for a city\
 I can see a button created with the city name\
