@@ -4,9 +4,17 @@
 }
 body{
     background-image: url("../../images/weather2.jpg");
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     background-size: cover;
+    max-width: 1500px;
     
+}
+.input-group{
+    max-width: 320px;
+}
+#search-button{
+    background-color: darkcyan;
+    color: white;
 }
 .forecast-header{
     /* margin-bottom: 5px; */
@@ -24,6 +32,7 @@ body{
 .forecast-card{
     background-color: darkcyan !important;
     height: fit-content !important;
+    width: 180px !important;
 }
 
 .min-temp{
@@ -54,4 +63,25 @@ body{
     color: white;
     background-color: slategray;
     /* width: fit-content; */
+}
+#search-history{
+    display: grid;
+    row-gap: 0.65rem;
+    column-gap: 0.5rem;
+}
+
+@media only screen and (max-width: 992px){
+
+    #search-history{
+        display: flex;
+
+    }
+}
+
+@media only screen and (min-width: 768) and (max-width: 992px) {
+
+    #search-form{
+        display: inline;
+
+    }
 }

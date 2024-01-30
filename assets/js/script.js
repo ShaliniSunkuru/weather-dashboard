@@ -152,7 +152,7 @@ function displayForecast(forecastArray) {
     for (var i = 0; i < forecastWeather.length; i++) {
         var average = arr => arr.reduce((prev, curr) => prev + curr) / arr.length;
         var newCardEl = $('<div>');
-        newCardEl.addClass('card col mx-2 forecast-card');
+        newCardEl.addClass('card col-sm-6 col-md-4 col-lg-2 mx-3 forecast-card');
         var dateDiv = $('<div>');
         dateDiv.addClass('card-header');
         dateDiv.text(forecastWeather[i].date);
