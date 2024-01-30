@@ -60,7 +60,8 @@ body{
     right: 0rem;
     display: block;
     font-size: .65em;
-    color: #0d6efd;
+    font-weight: bold;
+    color: rgb(3, 97, 97);
     background-color: initial;
     border: none;
 }
