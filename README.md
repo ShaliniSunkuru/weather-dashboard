@@ -61,7 +61,7 @@ I am alerted with an error message
 
 Here is a screenshot of the application in a browser with some text added and saved on the page.
 
-![Weather dashboard application](./images/screenshot.png)
+![Weather dashboard application displaying weather detail of London on 30/1/2024 with several cities in search history](./images/screenshot.png)
 
 ## Technology Used
 
