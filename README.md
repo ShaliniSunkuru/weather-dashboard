@@ -87,7 +87,7 @@ https://shalinisunkuru.github.io/weather-dashboard/
 
 ## Usage
 
-Click on the url for the deployed project.\ 
+Click on the url for the deployed project\
 Enter a city in the input box and click search\
 The weather data is displayed on the right\
 City button is saved for future views\
@@ -97,7 +97,7 @@ Note the error\
 Click on a city button\
 Note the plcement of the button change to the top\
 See the weather displayed\
-Reload the page to see your saved searches!\
+Reload the page to see your saved searches!
 
 ## Credits
 
