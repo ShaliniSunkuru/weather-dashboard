@@ -152,7 +152,7 @@ function displayForecast(forecastArray) {
     for (var i = 0; i < forecastWeather.length; i++) {
         var average = arr => arr.reduce((prev, curr) => prev + curr) / arr.length;
         var newCardEl = $('<div>');
-        newCardEl.addClass('card col-2 mx-3 forecast-card');
+        newCardEl.addClass('card col mx-2 forecast-card');
         var dateDiv = $('<div>');
         dateDiv.addClass('card-header');
         dateDiv.text(forecastWeather[i].date);
@@ -208,7 +208,7 @@ function updateLocalStorage() {
 function createCityButton(city) {
     //add buttons for city 
     var cityButton = $('<button>');
-    cityButton.addClass('btn btn-primary');
+    cityButton.addClass('btn btn-secondary');
     cityButton.attr('type', 'button');
     cityButton.text(city);
     searchHistoryGrid.prepend(cityButton);
